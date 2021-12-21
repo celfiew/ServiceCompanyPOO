@@ -1,0 +1,46 @@
+@startuml
+
+class Test {
++ main(String[]): {static} void
+}
+abstract class Services {
+- name: String
+- description: String
++ Services(String,String): <<Create>>
++ calculatePrice(): {abstract}double
++ getName(): String
+}
+class Simple {
+- price: double
++ Simple(name:String,description: String, price: double): <<Create>>
++ calculatePrice(): double
++ toString(): String
+}
+class FactoryService {
++ getclass(String): {static} Services
+}
+class Combo {
+- discount: double
+- services: List<Services>
++ Combo(name:String,description: String, discount:double): <<Create>>
++ addService(Services): void
++ calculatePrice(): double
++ toString(): String
+}
+class Company {
+- services: List<Services>
++ Company(): <<Create>>
++ addService(Services): void
++ showServices(): void
+}
+
+interface Exception{
+}
+
+Services <|-- Simple
+Services <|-- Combo
+Services "*" --* Combo
+Services "*" -left-* Company
+FactoryService  <-up- Company: use
+Test --> Exception
+@enduml
